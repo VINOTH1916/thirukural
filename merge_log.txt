@@ -1,0 +1,9 @@
+merged S125 (17,112,574 bytes)
+merged S126 (16,144,853 bytes)
+merged S127 (18,061,517 bytes)
+merged S128 (17,893,275 bytes)
+merged S129 (19,582,426 bytes)
+merged S130 (20,849,228 bytes)
+output: /home/vinothkumar/Downloads/thirukural/thirukural-app/public/audio/athigaram_048.mp3
+total: 109,643,873 bytes  (104.56 MB)
+files: 6

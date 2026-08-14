@@ -1,0 +1,136 @@
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Catamaran', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { font-family: inherit; }
+input, textarea { font-family: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ══════════════════════════════════════════════════
+   SATVA — warm ivory light
+   Open, clear, like a manuscript in daylight.
+══════════════════════════════════════════════════ */
+[data-theme="satva"] {
+  color-scheme: light;
+
+  --bg:               #f5f0e8;
+  --sidebar-bg:       #fdfaf6;
+  --topbar-bg:        #fdfaf6;
+  --card-bg:          #ffffff;
+  --player-bg:        #fdfaf6;
+  --btn-bg:           #ede7dc;
+  --hover-bg:         #e5ddd0;
+  --input-bg:         #f5f0e8;
+  --commentary-bg:    #faf7f2;
+  --dropdown-bg:      #ffffff;
+  --num-bg:           #e8e0d4;
+
+  --text-primary:     #18120a;
+  --text-secondary:   #3d3020;
+  --text-muted:       #7e6e54;
+
+  --accent:           #a04010;
+  --accent-dark:      #7c3008;
+  --accent-light:     #fceee0;
+  --accent-border:    #d8a070;
+
+  --border:           #ddd4c4;
+  --progress-track:   #d8cfc0;
+  --scrollbar:        #c8baa8;
+  --error:            #c0302a;
+
+  /* verse highlight strip */
+  --verse-strip:      #a04010;
+  --verse-bg:         #fff8f2;
+}
+
+/* ══════════════════════════════════════════════════
+   RAJAS — deep navy, high energy
+   Crisp indigo dark with warm amber accent.
+══════════════════════════════════════════════════ */
+[data-theme="rajas"] {
+  color-scheme: dark;
+
+  --bg:               #0f1420;
+  --sidebar-bg:       #0a0e18;
+  --topbar-bg:        #0a0e18;
+  --card-bg:          #161d30;
+  --player-bg:        #161d30;
+  --btn-bg:           #1e2840;
+  --hover-bg:         #263252;
+  --input-bg:         #0f1420;
+  --commentary-bg:    #131828;
+  --dropdown-bg:      #161d30;
+  --num-bg:           #1e2840;
+
+  --text-primary:     #e8eeff;
+  --text-secondary:   #aab8e0;
+  --text-muted:       #5a6a98;
+
+  --accent:           #f5a623;
+  --accent-dark:      #ffbf50;
+  --accent-light:     #221a08;
+  --accent-border:    #6a4810;
+
+  --border:           #1e2840;
+  --progress-track:   #1e2840;
+  --scrollbar:        #283460;
+  --error:            #f05555;
+
+  --verse-strip:      #f5a623;
+  --verse-bg:         #161a28;
+}
+
+/* ══════════════════════════════════════════════════
+   TAMAS — rich charcoal, warm amber
+   Deep and restful, easy on the eyes.
+══════════════════════════════════════════════════ */
+[data-theme="tamas"] {
+  color-scheme: dark;
+
+  --bg:               #141008;
+  --sidebar-bg:       #1c1610;
+  --topbar-bg:        #1c1610;
+  --card-bg:          #231a10;
+  --player-bg:        #231a10;
+  --btn-bg:           #2c2014;
+  --hover-bg:         #362818;
+  --input-bg:         #1c1610;
+  --commentary-bg:    #1f1810;
+  --dropdown-bg:      #261e12;
+  --num-bg:           #2c2014;
+
+  --text-primary:     #f0e4c8;
+  --text-secondary:   #c8b488;
+  --text-muted:       #7a6540;
+
+  --accent:           #d97820;
+  --accent-dark:      #f09040;
+  --accent-light:     #281808;
+  --accent-border:    #583010;
+
+  --border:           #342618;
+  --progress-track:   #342618;
+  --scrollbar:        #453020;
+  --error:            #e04838;
+
+  --verse-strip:      #d97820;
+  --verse-bg:         #1e1508;
+}

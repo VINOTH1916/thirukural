@@ -1,0 +1,15 @@
+# Root level
+git_status.txt
+git_remote.txt
+
+# Thirukural app
+thirukural-app/node_modules/
+thirukural-app/dist/
+thirukural-app/.env
+
+# Epub extract (large, not needed in repo)
+epub/
+
+# OS
+.DS_Store
+Thumbs.db
