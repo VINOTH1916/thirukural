@@ -234,13 +234,14 @@ export default function AudioPlayer({ src, title }) {
           </button>
           {speedMenuOpen && (
             <div className="speed-menu">
+              <div className="speed-menu-heading">வேகம்</div>
               {SPEEDS.map(s => (
                 <button
                   key={s}
-                  className={`speed-option ${speed === s ? 'active' : ''}`}
+                  className={`speed-item ${speed === s ? 'active' : ''}`}
                   onClick={() => { setSpeed(s); setSpeedMenuOpen(false) }}
                 >
-                  {s === 1.0 ? 'Normal' : `${s}×`}
+                  {s === 1.0 ? '1× Normal' : `${s}×`}
                 </button>
               ))}
             </div>

@@ -1,11 +1,17 @@
 # Root level
 git_status.txt
 git_remote.txt
+audio_size.txt
 
 # Thirukural app
 thirukural-app/node_modules/
 thirukural-app/dist/
 thirukural-app/.env
+
+# Audio files — too large for GitHub (>100MB), add manually or use Git LFS
+thirukural-app/public/audio/*.mp3
+thirukural-app/public/audio/*.wav
+thirukural-app/public/audio/*.m4a
 
 # Epub extract (large, not needed in repo)
 epub/

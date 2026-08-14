@@ -1,227 +1,489 @@
+/* ════════════════════════════════
+   HOME PAGE
+════════════════════════════════ */
 .home-page {
-  max-width: 860px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 40px 28px 72px;
+  padding: 48px 32px 88px;
+  animation: fadeUp 0.5s ease both;
 }
 
-/* ── Hero ── */
+/* ════════════════════════════════
+   HERO
+════════════════════════════════ */
 .hero {
   text-align: center;
-  padding: 48px 0 36px;
-  margin-bottom: 36px;
+  padding: 56px 24px 44px;
+  margin-bottom: 40px;
   position: relative;
+  border-radius: 24px;
+  background: var(--gradient-hero);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Decorative background glyphs */
+.hero::before {
+  content: 'அ';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 10rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.045;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 .hero::after {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
-  margin: 28px auto 0;
+  content: 'ஓம்';
+  position: absolute;
+  bottom: -18px;
+  right: -4px;
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 9rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.04;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
+
+/* Shimmer accent bar at the top of hero */
+.hero-shimmer-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent) 30%,
+    var(--accent-dark) 50%,
+    var(--accent) 70%,
+    transparent 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.hero-ornament {
+  display: inline-block;
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 2.8rem;
+  color: var(--accent);
+  opacity: 0.75;
+  margin-bottom: 12px;
+  animation: float 4s ease-in-out infinite;
+  line-height: 1;
+}
+
 .hero-title {
   font-family: 'Noto Serif Tamil', serif;
-  font-size: 3.4rem;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   letter-spacing: 0.025em;
   line-height: 1.2;
+  animation: fadeUp 0.6s 0.1s ease both;
+  position: relative;
+  z-index: 1;
 }
+
 .hero-subtitle {
   font-family: 'Catamaran', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  margin: 0 0 14px;
-  letter-spacing: 0.06em;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  animation: fadeUp 0.6s 0.18s ease both;
+  position: relative;
+  z-index: 1;
 }
+
 .hero-desc {
   font-family: 'Catamaran', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.97rem;
   font-weight: 400;
   color: var(--text-secondary);
-  margin: 0 0 28px;
-  line-height: 1.6;
+  margin: 0 0 32px;
+  line-height: 1.7;
+  animation: fadeUp 0.6s 0.25s ease both;
+  position: relative;
+  z-index: 1;
 }
+
+/* ── Stat bar ── */
 .hero-stats {
   display: inline-flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
   background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: var(--shadow-md);
+  animation: fadeUp 0.6s 0.32s ease both;
+  position: relative;
+  z-index: 1;
 }
+
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 14px 28px;
+  justify-content: center;
+  gap: 3px;
+  padding: 18px 32px;
+  position: relative;
+  transition: background 0.2s;
 }
+.stat:hover { background: var(--hover-bg); }
+
 .stat span {
   font-family: 'Catamaran', sans-serif;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 800;
   color: var(--accent);
   line-height: 1;
-}
-.stat label {
-  font-family: 'Catamaran', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.stat-div {
-  width: 1px;
-  height: 40px;
-  background: var(--border);
-  flex-shrink: 0;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* ── Opening kural ── */
+.stat label {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: default;
+}
+
+.stat-div {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  flex-shrink: 0;
+  margin: 12px 0;
+}
+
+/* ════════════════════════════════
+   OPENING KURAL
+════════════════════════════════ */
 .opening-kural {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px 32px;
-  margin-bottom: 40px;
+  border-radius: 18px;
+  padding: 32px 36px;
+  margin-bottom: 44px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-md);
+  animation: fadeUp 0.6s 0.4s ease both;
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
 }
+.opening-kural:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-border);
+  transform: translateY(-2px);
+}
+
+/* Gradient top-border */
 .opening-kural::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  background: var(--gradient-accent);
+  border-radius: 18px 18px 0 0;
 }
+
+/* Faint Tamil decorative numeral */
+.opening-kural::after {
+  content: '௧';
+  position: absolute;
+  right: 20px;
+  bottom: -8px;
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 7rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.opening-kural-label {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.opening-kural-label::before,
+.opening-kural-label::after {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent-border);
+}
+
 .kural-verse {
   font-family: 'Noto Serif Tamil', serif;
-  font-size: 1.22rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--text-primary);
-  line-height: 2;
-  margin-bottom: 10px;
-  letter-spacing: 0.01em;
+  line-height: 2.1;
+  margin-bottom: 14px;
+  letter-spacing: 0.015em;
+  position: relative;
+  z-index: 1;
 }
+
 .kural-num {
   font-family: 'Catamaran', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
-/* ── Pal cards ── */
+/* ════════════════════════════════
+   SECTION HEADING
+════════════════════════════════ */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s 0.45s ease both;
+}
+.section-heading-text {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.section-heading-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ════════════════════════════════
+   PAL CARDS
+════════════════════════════════ */
 .pal-cards {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
+
 .pal-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 26px;
+  border-radius: 20px;
+  padding: 0;
+  display: flex;
+  overflow: hidden;
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp 0.55s ease both;
+  position: relative;
+}
+.pal-card:nth-child(1) { animation-delay: 0.5s; }
+.pal-card:nth-child(2) { animation-delay: 0.6s; }
+.pal-card:nth-child(3) { animation-delay: 0.7s; }
+
+.pal-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+/* Colored left accent strip */
+.pal-card-accent {
+  width: 5px;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+.pal-virtue .pal-card-accent { background: linear-gradient(180deg, #e8a830, #c07a18); }
+.pal-wealth .pal-card-accent { background: linear-gradient(180deg, #4aaa6a, #2d7a48); }
+.pal-love   .pal-card-accent { background: linear-gradient(180deg, #d07098, #a04068); }
+
+/* Card inner content */
+.pal-card-inner {
   display: flex;
   gap: 22px;
-  transition: box-shadow 0.2s;
+  padding: 26px 28px;
+  flex: 1;
+  min-width: 0;
 }
-.pal-card:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,0.09);
-}
+
+/* Symbol badge */
 .pal-card-symbol {
   font-family: 'Noto Serif Tamil', serif;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent);
-  background: var(--accent-light);
-  border: 1px solid var(--accent-border);
-  border-radius: 10px;
-  width: 52px;
-  height: 52px;
+  border-radius: 14px;
+  width: 58px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   line-height: 1;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
+.pal-card:hover .pal-card-symbol {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.pal-virtue .pal-card-symbol {
+  background: linear-gradient(135deg, #fdf3d8, #fce8b0);
+  color: #c07a18;
+  border: 1px solid #e8c870;
+  box-shadow: 0 3px 12px rgba(192, 122, 24, 0.2);
+}
+.pal-wealth .pal-card-symbol {
+  background: linear-gradient(135deg, #d8f5e4, #b8ecd0);
+  color: #2d7a48;
+  border: 1px solid #70d090;
+  box-shadow: 0 3px 12px rgba(45, 122, 72, 0.2);
+}
+.pal-love .pal-card-symbol {
+  background: linear-gradient(135deg, #fce8f0, #f8d0e4);
+  color: #a04068;
+  border: 1px solid #e090b8;
+  box-shadow: 0 3px 12px rgba(160, 64, 104, 0.2);
+}
+
 .pal-card-body { flex: 1; min-width: 0; }
+
 .pal-card-title {
   font-family: 'Noto Serif Tamil', serif;
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   font-weight: 700;
-  margin: 0 0 2px;
+  margin: 0 0 3px;
   color: var(--text-primary);
   letter-spacing: 0.01em;
+  line-height: 1.35;
 }
+
 .pal-card-en {
   font-family: 'Catamaran', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.1em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
+.pal-virtue .pal-card-en { color: #c07a18; }
+.pal-wealth .pal-card-en { color: #2d7a48; }
+.pal-love   .pal-card-en { color: #a04068; }
+
 .pal-card-desc {
   font-family: 'Catamaran', sans-serif;
   font-size: 0.88rem;
   font-weight: 400;
   color: var(--text-secondary);
-  margin: 0 0 16px;
-  line-height: 1.6;
+  margin: 0 0 18px;
+  line-height: 1.7;
 }
+
+/* Mini athigaram button row */
 .pal-card-aths {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
 }
+
 .mini-ath-btn {
   background: var(--btn-bg);
   border: 1px solid var(--border);
   color: var(--text-secondary);
-  padding: 5px 11px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.8rem;
   font-family: 'Catamaran', sans-serif;
   font-weight: 500;
-  transition: background 0.13s, border-color 0.13s, color 0.13s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s,
+              transform 0.15s, box-shadow 0.15s;
   white-space: nowrap;
+  line-height: 1.5;
 }
 .mini-ath-btn:hover {
-  background: var(--accent-light);
-  border-color: var(--accent-border);
-  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
+.mini-ath-btn:active { transform: translateY(0); }
+
+.pal-virtue .mini-ath-btn:hover {
+  background: #fdf3d8;
+  border-color: #e8c870;
+  color: #c07a18;
+}
+.pal-wealth .mini-ath-btn:hover {
+  background: #d8f5e4;
+  border-color: #70d090;
+  color: #2d7a48;
+}
+.pal-love .mini-ath-btn:hover {
+  background: #fce8f0;
+  border-color: #e090b8;
+  color: #a04068;
+}
+
 .mini-ath-btn.see-more {
-  color: var(--accent);
-  border-color: var(--accent-border);
+  font-weight: 700;
   background: var(--accent-light);
-  font-weight: 600;
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+.mini-ath-btn.see-more:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+  box-shadow: var(--shadow-accent);
 }
 
-/* Pal top-border accent */
-.pal-virtue { border-top: 3px solid #d4921e; }
-.pal-wealth { border-top: 3px solid #3d9460; }
-.pal-love   { border-top: 3px solid #b85e80; }
-
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .home-page { padding: 24px 16px 48px; }
-  .hero-title { font-size: 2.4rem; }
-  .pal-card { flex-direction: column; gap: 14px; padding: 20px; }
-  .opening-kural { padding: 22px 20px; }
-  .kural-verse { font-size: 1.08rem; }
-  .hero-stats { width: 100%; }
-  .stat { padding: 12px 16px; }
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 640px) {
+  .home-page { padding: 24px 16px 64px; }
+  .hero { padding: 40px 16px 32px; border-radius: 16px; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-stats { width: 100%; border-radius: 12px; }
+  .stat { padding: 14px 18px; }
+  .stat span { font-size: 1.5rem; }
+  .opening-kural { padding: 24px 20px; border-radius: 14px; }
+  .kural-verse { font-size: 1.1rem; }
+  .pal-card-inner { gap: 14px; padding: 20px 18px; flex-wrap: wrap; }
+  .pal-card-symbol { width: 48px; height: 48px; font-size: 1.2rem; }
 }

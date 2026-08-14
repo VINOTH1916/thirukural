@@ -7,8 +7,13 @@ import './Layout.css'
 const PAL_ORDER = ['அறத்துப்பால்', 'பொருட்பால்', 'காமத்துப்பால்']
 const PAL_EN = {
   'அறத்துப்பால்': 'Virtue',
-  'பொருட்பால்': 'Wealth',
+  'பொருட்பால்':   'Wealth',
   'காமத்துப்பால்': 'Love',
+}
+const PAL_DOT = {
+  'அறத்துப்பால்': 'virtue',
+  'பொருட்பால்':   'wealth',
+  'காமத்துப்பால்': 'love',
 }
 
 const THEME_META = {
@@ -21,7 +26,7 @@ function buildTree(data) {
   const tree = {}
   for (const pal of PAL_ORDER) tree[pal] = {}
   for (const a of data) {
-    const pal = a.pal
+    const pal  = a.pal
     const iyal = a.iyal || 'பிற'
     if (!tree[pal][iyal]) tree[pal][iyal] = []
     tree[pal][iyal].push(a)
@@ -30,26 +35,26 @@ function buildTree(data) {
 }
 
 export default function Layout() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [expandedPals, setExpandedPals] = useState({ 'அறத்துப்பால்': true })
-  const [expandedIyals, setExpandedIyals] = useState({})
-  const [search, setSearch] = useState('')
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false)
-  const { theme, pickTheme } = useTheme()
+  const navigate  = useNavigate()
+  const location  = useLocation()
+  const [sidebarOpen, setSidebarOpen]       = useState(true)
+  const [expandedPals, setExpandedPals]     = useState({ 'அறத்துப்பால்': true })
+  const [expandedIyals, setExpandedIyals]   = useState({})
+  const [search, setSearch]                 = useState('')
+  const [themeMenuOpen, setThemeMenuOpen]   = useState(false)
+  const { theme, pickTheme }                = useTheme()
 
   const tree = buildTree(indexData)
 
-  const match = location.pathname.match(/athigaram\/(\d+)/)
+  const match      = location.pathname.match(/athigaram\/(\d+)/)
   const currentNum = match ? parseInt(match[1]) : null
 
-  // Auto-expand sidebar to show the active athigaram
+  // Auto-expand sidebar tree to active athigaram
   useEffect(() => {
     if (!currentNum) return
     const current = indexData.find(a => a.athigaramNumber === currentNum)
     if (current) {
-      setExpandedPals(p => ({ ...p, [current.pal]: true }))
+      setExpandedPals(p  => ({ ...p, [current.pal]: true }))
       setExpandedIyals(p => ({ ...p, [current.pal + '|' + current.iyal]: true }))
     }
   }, [currentNum])
@@ -62,7 +67,7 @@ export default function Layout() {
     return () => window.removeEventListener('click', close)
   }, [themeMenuOpen])
 
-  const togglePal  = (pal) => setExpandedPals(p => ({ ...p, [pal]: !p[pal] }))
+  const togglePal  = (pal) => setExpandedPals(p  => ({ ...p, [pal]:  !p[pal] }))
   const toggleIyal = (key) => setExpandedIyals(p => ({ ...p, [key]: !p[key] }))
 
   const filtered = search.trim()
@@ -91,7 +96,7 @@ export default function Layout() {
           <span className="topbar-sub">பரிமேலழகர் உரை</span>
         </div>
 
-        {/* Athigaram prev/next — only on athigaram pages */}
+        {/* Athigaram prev/next */}
         {currentNum && (
           <div className="topbar-nav">
             <button
@@ -119,10 +124,11 @@ export default function Layout() {
             className="theme-btn"
             onClick={() => setThemeMenuOpen(o => !o)}
             title="Change theme"
+            aria-expanded={themeMenuOpen}
           >
             <span className="theme-dot" data-theme-dot={theme} />
             <span className="theme-btn-label">{THEME_META[theme]?.sub}</span>
-            <span className="theme-btn-arrow">{themeMenuOpen ? '▲' : '▼'}</span>
+            <span className="theme-btn-arrow">▼</span>
           </button>
 
           {themeMenuOpen && (
@@ -152,16 +158,23 @@ export default function Layout() {
 
         {/* ── Sidebar ── */}
         <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+
+          {/* Search */}
           <div className="sidebar-search">
-            <input
-              type="search"
-              placeholder="தேடல்…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
+            <div className="search-wrap">
+              <span className="search-icon">⌕</span>
+              <input
+                type="search"
+                placeholder="தேடல்…"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                aria-label="Search athigarams"
+              />
+            </div>
           </div>
 
-          <nav className="sidebar-nav">
+          {/* Nav tree */}
+          <nav className="sidebar-nav" aria-label="Athigaram navigation">
             {filtered ? (
               <ul className="ath-list">
                 {filtered.map(a => (
@@ -185,8 +198,10 @@ export default function Layout() {
                   <button
                     className={`pal-btn ${expandedPals[pal] ? 'expanded' : ''}`}
                     onClick={() => togglePal(pal)}
+                    aria-expanded={!!expandedPals[pal]}
                   >
-                    <span className="pal-arrow">{expandedPals[pal] ? '▾' : '▸'}</span>
+                    <span className="pal-arrow">▸</span>
+                    <span className={`pal-dot pal-dot-${PAL_DOT[pal]}`} />
                     <span className="pal-name">{pal}</span>
                     <span className="pal-en">{PAL_EN[pal]}</span>
                   </button>
@@ -194,15 +209,16 @@ export default function Layout() {
                   {expandedPals[pal] && (
                     <div className="iyal-list">
                       {Object.entries(tree[pal] || {}).map(([iyal, athigarams]) => {
-                        const key = pal + '|' + iyal
+                        const key    = pal + '|' + iyal
                         const isOpen = expandedIyals[key] !== false
                         return (
                           <div key={iyal} className="iyal-group">
                             <button
                               className={`iyal-btn ${isOpen ? 'expanded' : ''}`}
                               onClick={() => toggleIyal(key)}
+                              aria-expanded={isOpen}
                             >
-                              <span>{isOpen ? '▾' : '▸'}</span>
+                              <span className="iyal-arrow">▸</span>
                               <span>{iyal}</span>
                             </button>
                             {isOpen && (
@@ -229,6 +245,14 @@ export default function Layout() {
               ))
             )}
           </nav>
+
+          {/* Footer */}
+          <div className="sidebar-footer">
+            <span>133 அதிகாரங்கள்</span>
+            <span className="sidebar-footer-dot" />
+            <span>1330 குறள்கள்</span>
+          </div>
+
         </aside>
 
         {/* ── Main content ── */}
