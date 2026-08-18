@@ -37,7 +37,10 @@ function buildTree(data) {
 export default function Layout() {
   const navigate  = useNavigate()
   const location  = useLocation()
-  const [sidebarOpen, setSidebarOpen]       = useState(true)
+  const [sidebarOpen, setSidebarOpen]       = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.innerWidth > 900
+  })
   const [expandedPals, setExpandedPals]     = useState({ 'அறத்துப்பால்': true })
   const [expandedIyals, setExpandedIyals]   = useState({})
   const [search, setSearch]                 = useState('')
@@ -59,6 +62,16 @@ export default function Layout() {
     }
   }, [currentNum])
 
+  useEffect(() => {
+    const handleResize = () => {
+      setSidebarOpen(window.innerWidth > 900)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [location.pathname])
+
   // Close theme menu on outside click
   useEffect(() => {
     if (!themeMenuOpen) return
@@ -69,6 +82,9 @@ export default function Layout() {
 
   const togglePal  = (pal) => setExpandedPals(p  => ({ ...p, [pal]:  !p[pal] }))
   const toggleIyal = (key) => setExpandedIyals(p => ({ ...p, [key]: !p[key] }))
+  const closeSidebarOnMobile = () => {
+    if (window.innerWidth <= 900) setSidebarOpen(false)
+  }
 
   const filtered = search.trim()
     ? indexData.filter(a =>
@@ -181,7 +197,7 @@ export default function Layout() {
                   <li key={a.athigaramNumber}>
                     <button
                       className={`ath-btn ${currentNum === a.athigaramNumber ? 'active' : ''}`}
-                      onClick={() => { navigate(`/athigaram/${a.athigaramNumber}`); setSearch('') }}
+                      onClick={() => { navigate(`/athigaram/${a.athigaramNumber}`); setSearch(''); closeSidebarOnMobile() }}
                     >
                       <span className="ath-num">{a.athigaramNumber}</span>
                       <span className="ath-name">{a.athigaramTitle}</span>
@@ -227,7 +243,7 @@ export default function Layout() {
                                   <li key={a.athigaramNumber}>
                                     <button
                                       className={`ath-btn ${currentNum === a.athigaramNumber ? 'active' : ''}`}
-                                      onClick={() => navigate(`/athigaram/${a.athigaramNumber}`)}
+                                      onClick={() => { navigate(`/athigaram/${a.athigaramNumber}`); closeSidebarOnMobile() }}
                                     >
                                       <span className="ath-num">{a.athigaramNumber}</span>
                                       <span className="ath-name">{a.athigaramTitle}</span>

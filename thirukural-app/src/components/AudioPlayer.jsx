@@ -10,7 +10,14 @@ function formatTime(sec) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-export default function AudioPlayer({ src, title }) {
+function formatPartLabel(src, idx, total) {
+  const part = `Part ${idx + 1} of ${total}`
+  if (!src) return part
+  const short = src.replace(/^Uyar_Valluvam_/i, '').replace(/\.mp3$/i, '')
+  return `${part} • ${short}`
+}
+
+export default function AudioPlayer({ src, sources, title }) {
   const audioRef = useRef(null)
   const progressRef = useRef(null)
 
@@ -23,6 +30,14 @@ export default function AudioPlayer({ src, title }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [speedMenuOpen, setSpeedMenuOpen] = useState(false)
+  const [sourceIndex, setSourceIndex] = useState(0)
+  const [resumeAfterSwitch, setResumeAfterSwitch] = useState(false)
+
+  const sourceList = Array.isArray(sources) && sources.length > 0 ? sources : (src ? [src] : [])
+  const activeSrc = sourceList[sourceIndex] || src
+  const activePartLabel = sourceList.length > 1
+    ? formatPartLabel(activeSrc, sourceIndex, sourceList.length)
+    : null
 
   // Reset when src changes
   useEffect(() => {
@@ -31,7 +46,9 @@ export default function AudioPlayer({ src, title }) {
     setDuration(0)
     setError(false)
     setLoading(false)
-  }, [src])
+    setSourceIndex(0)
+    setResumeAfterSwitch(false)
+  }, [src, sources])
 
   // Sync speed to audio element
   useEffect(() => {
@@ -45,6 +62,26 @@ export default function AudioPlayer({ src, title }) {
       audioRef.current.muted = muted
     }
   }, [volume, muted])
+
+  useEffect(() => {
+    if (!resumeAfterSwitch) return
+    const audio = audioRef.current
+    if (!audio) return
+    const playPromise = audio.play()
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise
+        .then(() => {
+          setPlaying(true)
+          setLoading(false)
+          setResumeAfterSwitch(false)
+        })
+        .catch(() => {
+          setError(true)
+          setLoading(false)
+          setResumeAfterSwitch(false)
+        })
+    }
+  }, [activeSrc, resumeAfterSwitch])
 
   const handlePlayPause = useCallback(() => {
     const audio = audioRef.current
@@ -63,6 +100,29 @@ export default function AudioPlayer({ src, title }) {
       })
     }
   }, [playing])
+
+  const advanceSource = useCallback(() => {
+    if (sourceIndex < sourceList.length - 1) {
+      setResumeAfterSwitch(true)
+      setSourceIndex(i => i + 1)
+      setCurrentTime(0)
+      setDuration(0)
+      setError(false)
+      setLoading(true)
+    } else {
+      setPlaying(false)
+    }
+  }, [sourceIndex, sourceList.length])
+
+  const switchToSource = useCallback((index) => {
+    if (index < 0 || index >= sourceList.length || index === sourceIndex) return
+    setResumeAfterSwitch(playing)
+    setSourceIndex(index)
+    setCurrentTime(0)
+    setDuration(0)
+    setError(false)
+    setLoading(playing)
+  }, [playing, sourceIndex, sourceList.length])
 
   const skip = useCallback((seconds) => {
     const audio = audioRef.current
@@ -106,27 +166,62 @@ export default function AudioPlayer({ src, title }) {
     return () => window.removeEventListener('keydown', handler)
   }, [handlePlayPause, skip])
 
-  if (!src) return null
+  if (!activeSrc) return null
 
   return (
     <div className="audio-player">
       {/* Hidden audio element */}
       <audio
         ref={audioRef}
-        src={`/audio/${src}`}
+        src={`/audio/${activeSrc}`}
         preload="metadata"
         onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
         onDurationChange={() => setDuration(audioRef.current?.duration || 0)}
         onLoadStart={() => setLoading(true)}
         onCanPlay={() => setLoading(false)}
-        onEnded={() => setPlaying(false)}
-        onError={() => { setError(true); setLoading(false) }}
+        onEnded={() => {
+          if (sourceIndex < sourceList.length - 1) {
+            advanceSource()
+          } else {
+            setPlaying(false)
+          }
+        }}
+        onError={() => {
+          if (sourceIndex < sourceList.length - 1) {
+            advanceSource()
+            return
+          }
+          setError(true)
+          setLoading(false)
+        }}
         onWaiting={() => setLoading(true)}
         onPlaying={() => setLoading(false)}
       />
 
       {/* Title */}
       {title && <div className="player-title">{title}</div>}
+
+      {activePartLabel && (
+        <div className="player-title">
+          {activePartLabel}
+        </div>
+      )}
+
+      {sourceList.length > 1 && (
+        <div className="part-picker" role="group" aria-label="Audio parts">
+          {sourceList.map((partSrc, idx) => (
+            <button
+              key={partSrc}
+              type="button"
+              className={`part-btn ${idx === sourceIndex ? 'active' : ''}`}
+              onClick={() => switchToSource(idx)}
+              title={formatPartLabel(partSrc, idx, sourceList.length)}
+            >
+              {idx + 1}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Progress bar */}
       <div className="progress-wrap">

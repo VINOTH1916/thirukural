@@ -45,17 +45,56 @@
 /* ── Title ── */
 .player-title {
   font-family: 'Catamaran', sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--text-muted);
   text-align: center;
-  margin-bottom: 12px;
-  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 4px;
+}
+
+.part-picker {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -2px 0 12px;
+  padding: 0 2px;
+}
+
+.part-btn {
+  min-width: 38px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--btn-bg);
+  color: var(--text-secondary);
+  font-family: 'Catamaran', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s,
+              transform 0.12s, box-shadow 0.15s;
+}
+
+.part-btn:hover {
+  background: var(--hover-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.part-btn.active {
+  background: var(--gradient-accent);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
 }
 
 /* ── Progress bar ── */
@@ -159,7 +198,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
 }
 
 /* ── Volume group ── */
@@ -428,10 +467,95 @@
 }
 
 /* ── Responsive ── */
+@media (max-width: 720px) {
+  .audio-player {
+    position: static;
+    top: auto;
+    padding: 14px 14px 16px;
+    margin-bottom: 18px;
+    border-radius: 16px;
+  }
+
+  .player-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  .part-picker {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .part-btn {
+    min-width: 34px;
+    height: 32px;
+    padding: 0 8px;
+    font-size: 0.74rem;
+    border-radius: 9px;
+  }
+
+  .progress-wrap {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .time-label {
+    min-width: 32px;
+    font-size: 0.66rem;
+  }
+
+  .player-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 8px;
+  }
+
+  .volume-group {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    flex: 0 0 100%;
+  }
+
+  .playback-group {
+    order: 1;
+    gap: 8px;
+  }
+
+  .speed-group {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .speed-menu {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    transform-origin: top center;
+  }
+
+  .ctrl-btn,
+  .skip-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .play-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .volume-slider {
+    width: min(220px, 52vw);
+  }
+}
+
 @media (max-width: 520px) {
-  .audio-player { padding: 14px 16px 16px; border-radius: 14px; }
-  .volume-slider { width: 56px; }
+  .audio-player { padding: 12px 12px 14px; border-radius: 14px; }
+  .volume-slider { width: min(180px, 48vw); }
   .play-btn { width: 44px; height: 44px; }
   .skip-btn { width: 32px; height: 32px; }
-  .speed-btn { padding: 5px 9px; font-size: 0.75rem; min-width: 38px; }
+  .speed-btn { padding: 5px 9px; font-size: 0.74rem; min-width: 38px; }
+  .part-btn { min-width: 32px; height: 30px; }
 }

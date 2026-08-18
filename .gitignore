@@ -12,6 +12,12 @@ thirukural-app/.env
 thirukural-app/public/audio/*.mp3
 thirukural-app/public/audio/*.wav
 thirukural-app/public/audio/*.m4a
+!thirukural-app/public/audio/Uyar_Valluvam_S125.mp3
+!thirukural-app/public/audio/Uyar_Valluvam_S126.mp3
+!thirukural-app/public/audio/Uyar_Valluvam_S127.mp3
+!thirukural-app/public/audio/Uyar_Valluvam_S128.mp3
+!thirukural-app/public/audio/Uyar_Valluvam_S129.mp3
+!thirukural-app/public/audio/Uyar_Valluvam_S130.mp3
 
 # Epub extract (large, not needed in repo)
 epub/

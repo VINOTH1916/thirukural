@@ -90,6 +90,7 @@ export default function AthigaramPage() {
       {/* ── Audio Player ── */}
       <AudioPlayer
         src={data.audioFile}
+        sources={data.audioFiles}
         title={`${data.athigaramNumber}. ${data.athigaramTitle}`}
       />
 

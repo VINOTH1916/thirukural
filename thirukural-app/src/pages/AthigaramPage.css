@@ -518,6 +518,113 @@
   margin: 0;
 }
 
+@media (max-width: 900px) {
+  .ath-page {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .ath-page {
+    padding: 18px 12px 72px;
+  }
+
+  .ath-header {
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+  }
+
+  .ath-title {
+    gap: 10px;
+    margin-bottom: 8px;
+    line-height: 1.18;
+    font-size: clamp(1.45rem, 6vw, 1.9rem);
+  }
+
+  .ath-num-badge {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+
+  .ath-kural-range {
+    font-size: 0.74rem;
+  }
+
+  .ath-intro {
+    padding: 16px 15px;
+    margin-bottom: 18px;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .intro-text {
+    font-size: 0.89rem;
+    line-height: 1.9;
+  }
+
+  .kural-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .toggle-group {
+    justify-content: space-between;
+  }
+
+  .expand-btns button {
+    width: 100%;
+    padding: 9px 14px;
+  }
+
+  .kurals-list {
+    gap: 12px;
+    margin-bottom: 44px;
+  }
+
+  .kural-header {
+    padding: 14px 14px;
+    gap: 10px;
+  }
+
+  .kural-badge {
+    min-width: 30px;
+    padding: 3px 8px;
+    font-size: 0.64rem;
+  }
+
+  .kural-verse-preview {
+    font-size: 0.94rem;
+    line-height: 1.45;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .kural-body {
+    padding: 18px 14px 20px;
+    gap: 18px;
+  }
+
+  .verse-section {
+    padding: 14px 14px;
+  }
+
+  .verse-line {
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+
+  .modern-text,
+  .meaning-text,
+  .commentary-text,
+  .vilakkam-text {
+    line-height: 1.95;
+  }
+}
+
 /* ── No kurals placeholder ── */
 .no-kurals {
   text-align: center;

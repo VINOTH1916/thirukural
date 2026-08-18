@@ -5,7 +5,14 @@
   "palSlug": "porutpal",
   "iyal": "அரசியல்",
   "intro": "அஃதாவது, அவ்வுபாயங்களுள் ஒறுத்தல் குறித்த அரசன் நால்வகை வலியையும் அளந்தறிதல். அதிகார முறைமையும் இதனானே விளங்கும்.",
-  "audioFile": "athigaram_048.mp3",
+  "audioFiles": [
+    "Uyar_Valluvam_S125.mp3",
+    "Uyar_Valluvam_S126.mp3",
+    "Uyar_Valluvam_S127.mp3",
+    "Uyar_Valluvam_S128.mp3",
+    "Uyar_Valluvam_S129.mp3",
+    "Uyar_Valluvam_S130.mp3"
+  ],
   "kurals": [
     {
       "kuralNumber": 471,
