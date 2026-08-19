@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import indexData from '../data/index.json'
+import varalaruText from '../data/varalaru.txt?raw'
 import './HomePage.css'
 
 const PAL_INFO = {
@@ -25,6 +26,11 @@ const PAL_INFO = {
 
 export default function HomePage() {
   const navigate = useNavigate()
+  const varalaruParagraphs = varalaruText
+    .trim()
+    .split(/\n+/)
+    .map(part => part.trim())
+    .filter(Boolean)
 
   const grouped = {}
   for (const a of indexData) {
@@ -61,6 +67,16 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      <section className="varalaru-card" aria-labelledby="varalaru-title">
+        <div className="varalaru-kicker">பரிமேலழகரின் வரலாறு</div>
+        <h2 id="varalaru-title" className="varalaru-title">பரிமேலழகர் யார்?</h2>
+        <div className="varalaru-body">
+          {varalaruParagraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
+      </section>
 
       {/* ── Opening kural ── */}
       <div className="opening-kural">
